@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>AnimalHarvestingSpot (Continued)</name>
+	<author>Mlie</author>
+	<targetVersion>1.0.2059</targetVersion>
+	<description>
+This mod add Animal harvesting spot.
+Colonist try to go to Animal harvesting spot ,
+Call animals, then shearing , milking , slaughtering.
+        </description>
+</ModMetaData>

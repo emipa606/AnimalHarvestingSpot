@@ -1,0 +1,4 @@
+E:\Steam\steamapps\common\RimWorld\Mods\AnimalHarvestingSpot\Assemblies\AnimalHarvestingSpot.dll
+E:\Steam\steamapps\common\RimWorld\Mods\AnimalHarvestingSpot\Source\AnimalHarvestingSpot\AnimalHarvestingSpot\obj\Debug\AnimalHarvestingSpot.csprojAssemblyReference.cache
+E:\Steam\steamapps\common\RimWorld\Mods\AnimalHarvestingSpot\Source\AnimalHarvestingSpot\AnimalHarvestingSpot\obj\Debug\AnimalHarvestingSpot.csproj.CoreCompileInputs.cache
+E:\Steam\steamapps\common\RimWorld\Mods\AnimalHarvestingSpot\Source\AnimalHarvestingSpot\AnimalHarvestingSpot\obj\Debug\AnimalHarvestingSpot.dll
