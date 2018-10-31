@@ -1,5 +1,4 @@
-# AnimalHarvestingSpot
-AnimalHarvestingSpot (Continued)
+# AnimalHarvestingSpot (Continued)
 
 This mod add Animal harvesting spot.
 Colonist try to go to Animal harvesting spot ,
