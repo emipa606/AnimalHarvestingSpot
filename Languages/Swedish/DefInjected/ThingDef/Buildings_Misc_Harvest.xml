@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <AnimalHarvestingSpot.label>Djurhanteringsplats</AnimalHarvestingSpot.label>
+  <AnimalHarvestingSpot.description>Definerar en plats där djur kan mjölkas, slaktas eller klippas.</AnimalHarvestingSpot.description>
+  <AnimalHarvestingSpot_Blueprint.label>Djurhanteringsplats (ritning)</AnimalHarvestingSpot_Blueprint.label>
+  <AnimalHarvestingSpot_Frame.label>Djurhanteringsplats (byggnad)</AnimalHarvestingSpot_Frame.label>
+  <AnimalHarvestingSpot_Frame.description>Definerar en plats där djur kan mjölkas, slaktas eller klippas.</AnimalHarvestingSpot_Frame.description>
+
+
+</LanguageData>
