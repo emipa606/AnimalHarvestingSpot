@@ -2,7 +2,9 @@
 <ModMetaData>
 	<name>AnimalHarvestingSpot (Continued)</name>
 	<author>Mlie</author>
-	<targetVersion>1.0.2059</targetVersion>
+	<supportedVersions>
+		<li>1.0</li>
+	</supportedVersions>
 	<description>
 This mod add Animal harvesting spot.
 Colonist try to go to Animal harvesting spot ,
