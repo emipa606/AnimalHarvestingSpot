@@ -35,6 +35,12 @@ namespace AnimalHarvestingSpot
 
         Thing spot = null;
 
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_References.Look(ref spot, "harvesting_spot");
+        }
+
         protected override IEnumerable<Toil> MakeNewToils()
         {
             if (spot != null && !spot.Destroyed)
