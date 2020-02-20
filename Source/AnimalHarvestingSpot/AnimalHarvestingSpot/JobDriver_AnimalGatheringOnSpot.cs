@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -34,6 +32,12 @@ namespace AnimalHarvestingSpot
         }
 
         Thing spot = null;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_References.Look(ref spot, "harvesting_spot");
+        }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
