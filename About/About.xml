@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
 	<name>AnimalHarvestingSpot (Continued)</name>
+	<packageId>Mlie.AnimalHarvestingSpot</packageId>
 	<author>Mlie</author>
 	<supportedVersions>
 		<li>1.0</li>
+		<li>1.1</li>
 	</supportedVersions>
+	<url>https://github.com/emipa606/AnimalHarvestingSpot</url>
 	<description>
 This mod add Animal harvesting spot.
 Colonist try to go to Animal harvesting spot ,
