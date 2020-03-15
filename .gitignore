@@ -230,6 +230,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-*.csproj
-*.sln
-Source/Properties/AssemblyInfo.cs
