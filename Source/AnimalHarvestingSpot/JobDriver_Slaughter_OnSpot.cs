@@ -7,6 +7,11 @@ namespace AnimalHarvestingSpot
 {
     public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
     {
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_References.Look(ref spot, "harvesting_spot");
+        }
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -16,12 +21,17 @@ namespace AnimalHarvestingSpot
             {
                 list.Add(bld as Thing);
             }
+            foreach (Building bld in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("AnimalSlaughteringSpot")))
+            {
+                list.Add(bld as Thing);
+            }
+            //if (Prefs.DevMode) Log.Message($"JobDriver_Slaughter_OnSpot: found following things: {string.Join(",", list)}");
             Pawn target = TargetA.Thing as Pawn;
             spot = GenClosest.ClosestThing_Global_Reachable(
                 target.Position, target.Map, list,
                 PathEndMode.Touch, TraverseParms.For(target, Danger.Deadly, TraverseMode.ByPawn, false), 999f, null, null);
 
-            if (spot == null && CanTarget(target))
+            if (spot != null && CanTarget(target))
             {
                 if (Prefs.DevMode) Log.Message("JobDriver_Slaughter_OnSpot: spot is " + spot);
                 return pawn.Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null);
@@ -30,6 +40,7 @@ namespace AnimalHarvestingSpot
             spot = null;
             return true;
         }
+
         Thing spot = null;
         protected override IEnumerable<Toil> MakeNewToils()
         {

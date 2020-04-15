@@ -15,4 +15,9 @@
     <driverClass>AnimalHarvestingSpot.JobDriver_Shear_OnSpot</driverClass>
     <reportString>shearing TargetA.</reportString>
   </JobDef>
+  <JobDef>
+    <defName>Train</defName>
+    <driverClass>AnimalHarvestingSpot.JobDriver_Train_OnSpot</driverClass>
+    <reportString>training TargetA.</reportString>
+  </JobDef>
 </Defs>

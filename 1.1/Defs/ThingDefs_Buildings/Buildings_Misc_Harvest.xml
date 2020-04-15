@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase" Name="AnimalSpots" Abstract="True">    
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <statBases>
+      <WorkToBuild>0</WorkToBuild>
+    </statBases>
+    <scatterableOnMapGen>false</scatterableOnMapGen>
+    <useHitPoints>False</useHitPoints>
+    <designationCategory>Misc</designationCategory>
+    <passability>Standable</passability>
+    <building>
+      <sowTag>SupportPlantsOnly</sowTag>
+      <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="AnimalSpots">
+    <defName>AnimalHarvestingSpot</defName>
+    <label>animal harvesting spot</label>
+    <description>Designates a spot where animals can be milked, sheared or slaughtered.</description>
+    <graphicData>
+      <texPath>Things/Building/Misc/PartySpot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+  
+  <ThingDef ParentName="AnimalSpots">
+    <defName>AnimalMilkingSpot</defName>
+    <label>milking spot</label>
+    <description>Designates a spot where animals can be milked.</description>
+    <graphicData>
+      <texPath>AnimalSpots/AnimalMilkingSpot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+  
+  <ThingDef ParentName="AnimalSpots">
+    <defName>AnimalShearingSpot</defName>
+    <label>shearing spot</label>
+    <description>Designates a spot where animals can be sheared.</description>
+    <graphicData>
+      <texPath>AnimalSpots/AnimalShearingSpot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+  
+  <ThingDef ParentName="AnimalSpots">
+    <defName>AnimalSlaughteringSpot</defName>
+    <label>slaughtering spot</label>
+    <description>Designates a spot where animals can be slaughtered.</description>
+    <graphicData>
+      <texPath>AnimalSpots/AnimalSlaughteringSpot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef> 
+  
+  <ThingDef ParentName="AnimalSpots">
+    <defName>AnimalTrainingSpot</defName>
+    <label>training spot</label>
+    <description>Designates a spot where animals can start their training.</description>
+    <graphicData>
+      <texPath>AnimalSpots/AnimalTrainingSpot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef> 
+</Defs>

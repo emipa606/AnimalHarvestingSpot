@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JobDriver_AnimalGatheringOnSpot.cs" />
+    <Compile Include="JobDriver_Train_OnSpot.cs" />
     <Compile Include="JobDriver_Milk_OnSpot.cs" />
     <Compile Include="JobDriver_Shear_OnSpot.cs" />
     <Compile Include="JobDriver_Slaughter_OnSpot.cs" />

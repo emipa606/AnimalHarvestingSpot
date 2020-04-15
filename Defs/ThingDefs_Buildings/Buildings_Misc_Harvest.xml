@@ -1,6 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  
   <ThingDef ParentName="BuildingBase">
     <defName>AnimalHarvestingSpot</defName>
     <label>animal harvesting spot</label>
@@ -13,8 +12,8 @@
     <statBases>
       <WorkToBuild>0</WorkToBuild>
     </statBases>
-		<scatterableOnMapGen>false</scatterableOnMapGen>
-		<useHitPoints>False</useHitPoints>
+    <scatterableOnMapGen>false</scatterableOnMapGen>
+    <useHitPoints>False</useHitPoints>
     <designationCategory>Misc</designationCategory>
     <passability>Standable</passability>
     <building>
@@ -23,5 +22,4 @@
       <ai_chillDestination>false</ai_chillDestination>
     </building>
   </ThingDef>
-  
 </Defs>

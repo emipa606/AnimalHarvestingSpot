@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Configuration>
-  <Excluded>
-    <exclude>E:\Steam\steamapps\common\RimWorld\Mods\AnimalHarvestingSpot\.gitignore</exclude>
-    <exclude>E:\Steam\steamapps\common\RimWorld\Mods\AnimalHarvestingSpot\Source</exclude>
-  </Excluded>
-</Configuration>
