@@ -73,7 +73,7 @@ namespace AnimalHarvestingSpot
                             if (Prefs.DevMode) Log.Message("JobDriver_Slaughter_OnSpot: waiting target" + target);
                             if (pawn.Position.DistanceToSquared(target.Position) < 32f)
                             {
-                                Job waitjob = new Job(JobDefOf.Wait);
+                                Job waitjob = new Job(JobDefOf.Wait, 100);
                                 target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null, JobTag.MiscWork, false);
                                 this.ReadyForNextToil();
                             }
