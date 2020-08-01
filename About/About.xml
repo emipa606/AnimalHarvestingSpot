@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>AnimalHarvestingSpot (Continued)</name>
-	<packageId>Mlie.AnimalHarvestingSpot</packageId>
-	<author>Mlie</author>
-	<supportedVersions>
-		<li>1.0</li>
-		<li>1.1</li>
-	</supportedVersions>
-	<url>https://github.com/emipa606/AnimalHarvestingSpot</url>
-	<description>
+  <name>AnimalHarvestingSpot (Continued)</name>
+  <packageId>Mlie.AnimalHarvestingSpot</packageId>
+  <author>Mlie</author>
+  <supportedVersions>
+    <li>1.0</li>
+    <li>1.1</li>
+    <li>1.2</li>
+  </supportedVersions>
+  <url>https://github.com/emipa606/AnimalHarvestingSpot</url>
+  <description>
 	
 Update of Animal harvesting spot
 https://steamcommunity.com/sharedfiles/filedetails/?id=1812077718
@@ -40,5 +41,3 @@ Call animals, then shearing , milking , slaughtering.
 
         </description>
 </ModMetaData>
-
-

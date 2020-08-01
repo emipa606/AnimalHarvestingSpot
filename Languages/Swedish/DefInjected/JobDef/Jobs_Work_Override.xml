@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
   <Slaughter.reportString>slaktar TargetA.</Slaughter.reportString>
   <Milk.reportString>mjölkar TargetA.</Milk.reportString>
   <Shear.reportString>klipper TargetA.</Shear.reportString>
-
-
 </LanguageData>
