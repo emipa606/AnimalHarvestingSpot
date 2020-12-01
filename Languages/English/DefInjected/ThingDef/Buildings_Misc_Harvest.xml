@@ -1,12 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
   <AnimalHarvestingSpot.label>animal harvesting spot</AnimalHarvestingSpot.label>
   <AnimalHarvestingSpot.description>Designates a spot where animals be milked, slaughtered or sheared.</AnimalHarvestingSpot.description>
-
-
   <!--<AnimalHarvestingSpot_Blueprint.label>animal harvesting spot (blueprint)</AnimalHarvestingSpot_Blueprint.label>-->
   <!--<AnimalHarvestingSpot_Frame.label>animal harvesting spot (building)</AnimalHarvestingSpot_Frame.label>-->
   <!--<AnimalHarvestingSpot_Frame.description>Designates a spot where animals be milked, slaughtered or sheared.</AnimalHarvestingSpot_Frame.description>-->
-
 </LanguageData>
