@@ -7,6 +7,8 @@ namespace AnimalHarvestingSpot
 {
     public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
     {
+        private Thing spot;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -21,29 +23,36 @@ namespace AnimalHarvestingSpot
             }
 
             var list = new List<Thing>();
-            foreach (Building bld in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("AnimalHarvestingSpot")))
+            foreach (var bld in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
+                ThingDef.Named("AnimalHarvestingSpot")))
             {
-                list.Add(bld as Thing);
+                list.Add(bld);
             }
-            foreach (Building bld in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("AnimalSlaughteringSpot")))
+
+            foreach (var bld in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
+                ThingDef.Named("AnimalSlaughteringSpot")))
             {
-                list.Add(bld as Thing);
+                list.Add(bld);
             }
+
             //if (Prefs.DevMode) Log.Message($"JobDriver_Slaughter_OnSpot: found following things: {string.Join(",", list)}");
-            var target = TargetA.Thing as Pawn;
-            spot = GenClosest.ClosestThing_Global_Reachable(
-                target.Position, target.Map, list,
-                PathEndMode.Touch, TraverseParms.For(target, Danger.Deadly, TraverseMode.ByPawn, false), 999f, null, null);
-
-            if (spot != null && CanTarget(target))
+            if (TargetA.Thing is Pawn target)
             {
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: spot is " + spot);
-                }
+                spot = GenClosest.ClosestThing_Global_Reachable(
+                    target.Position, target.Map, list,
+                    PathEndMode.Touch, TraverseParms.For(target), 999f);
 
-                return pawn.Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null);
+                if (spot != null && CanTarget(target))
+                {
+                    if (Prefs.DevMode)
+                    {
+                        //Log.Message("JobDriver_Slaughter_OnSpot: spot is " + spot);
+                    }
+
+                    return pawn.Reserve(job.GetTarget(TargetIndex.A), job);
+                }
             }
+
             if (Prefs.DevMode)
             {
                 Log.Message("JobDriver_Slaughter_OnSpot: spot is not found or unreachable");
@@ -53,12 +62,11 @@ namespace AnimalHarvestingSpot
             return true;
         }
 
-        Thing spot = null;
         protected override IEnumerable<Toil> MakeNewToils()
         {
             if (spot != null && !spot.Destroyed)
             {
-                var CallVictim = new Toil()
+                var CallVictim = new Toil
                 {
                     initAction = () =>
                     {
@@ -73,53 +81,64 @@ namespace AnimalHarvestingSpot
                         {
                             locomotionUrgency = LocomotionUrgency.Sprint
                         };
-                        target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null, JobTag.MiscWork, false);
+                        target?.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                            JobTag.MiscWork);
                     },
                     defaultCompleteMode = ToilCompleteMode.PatherArrival
                 };
                 CallVictim.FailOnDespawnedOrNull(TargetIndex.A);
                 yield return CallVictim;
 
-                var WaitVictim = new Toil()
+                var WaitVictim = new Toil
                 {
                     defaultCompleteMode = ToilCompleteMode.Never,
                     tickAction = () =>
                     {
-                        if (Find.TickManager.TicksGame % 100 == 0)
+                        if (Find.TickManager.TicksGame % 100 != 0)
                         {
-                            var target = TargetA.Thing as Pawn;
-                            if (Prefs.DevMode)
+                            return;
+                        }
+
+                        var target = TargetA.Thing as Pawn;
+                        if (Prefs.DevMode)
+                        {
+                            //Log.Message("JobDriver_Slaughter_OnSpot: waiting target" + target);
+                        }
+
+                        if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
+                        {
+                            var waitjob = new Job(JobDefOf.Wait, 100);
+                            target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null,
+                                JobTag.MiscWork);
+                            ReadyForNextToil();
+                        }
+                        else
+                        {
+                            if (target == null)
                             {
-                                //Log.Message("JobDriver_Slaughter_OnSpot: waiting target" + target);
+                                return;
                             }
 
-                            if (pawn.Position.DistanceToSquared(target.Position) < 32f)
+                            target.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                            var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
                             {
-                                var waitjob = new Job(JobDefOf.Wait, 100);
-                                target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null, JobTag.MiscWork, false);
-                                ReadyForNextToil();
-                            }
-                            else
-                            {
-                                target.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
-                                var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
-                                {
-                                    locomotionUrgency = LocomotionUrgency.Sprint
-                                };
-                                target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null, JobTag.MiscWork, false);
-                            }
+                                locomotionUrgency = LocomotionUrgency.Sprint
+                            };
+                            target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                                JobTag.MiscWork);
                         }
                     }
                 };
                 WaitVictim.AddFinishAction(() =>
                 {
                     var target = TargetA.Thing as Pawn;
-                    target.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
+                    target?.jobs.EndCurrentJob(JobCondition.InterruptForced);
                 });
                 WaitVictim.FailOnDespawnedOrNull(TargetIndex.A);
                 yield return WaitVictim;
             }
-            foreach (Toil toil in base.MakeNewToils())
+
+            foreach (var toil in base.MakeNewToils())
             {
                 yield return toil;
             }
@@ -127,10 +146,11 @@ namespace AnimalHarvestingSpot
 
         protected virtual bool CanTarget(Pawn trg)
         {
-            if (trg.GetStatValue(StatDefOf.MoveSpeed, true) <= pawn.GetStatValue(StatDefOf.MoveSpeed, true) / 2f)
+            if (trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f)
             {
                 return false;
             }
+
             return true;
         }
     }

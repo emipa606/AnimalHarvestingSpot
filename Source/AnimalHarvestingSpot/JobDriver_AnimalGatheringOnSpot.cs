@@ -3,12 +3,11 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 
-
 namespace AnimalHarvestingSpot
 {
     public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
     {
-        public Thing spot = null;
+        protected Thing spot;
 
         public override void ExposeData()
         {
@@ -20,7 +19,7 @@ namespace AnimalHarvestingSpot
         {
             if (spot != null && !spot.Destroyed)
             {
-                var CallVictim = new Toil()
+                var CallVictim = new Toil
                 {
                     initAction = () =>
                     {
@@ -35,54 +34,64 @@ namespace AnimalHarvestingSpot
                         {
                             locomotionUrgency = LocomotionUrgency.Sprint
                         };
-                        target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null, JobTag.MiscWork, false);
+                        target?.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                            JobTag.MiscWork);
                     },
                     defaultCompleteMode = ToilCompleteMode.PatherArrival
                 };
                 CallVictim.FailOnDespawnedOrNull(TargetIndex.A);
                 yield return CallVictim;
-                var WaitVictim = new Toil()
+                var WaitVictim = new Toil
                 {
                     defaultCompleteMode = ToilCompleteMode.Never,
                     tickAction = () =>
                     {
-                        if (Find.TickManager.TicksGame % 200 == 0)
+                        if (Find.TickManager.TicksGame % 200 != 0)
                         {
-                            var target = TargetA.Thing as Pawn;
-                            if (Prefs.DevMode)
+                            return;
+                        }
+
+                        var target = TargetA.Thing as Pawn;
+                        if (Prefs.DevMode)
+                        {
+                            //Log.Message("JobDriver_AnimalGatheringOnSpot: waiting target " + target);
+                        }
+
+                        if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
+                        {
+                            var waitjob = new Job(JobDefOf.Wait, 200);
+                            target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null,
+                                JobTag.MiscWork);
+                            ReadyForNextToil();
+                        }
+                        else
+                        {
+                            if (target == null)
                             {
-                                //Log.Message("JobDriver_AnimalGatheringOnSpot: waiting target " + target);
+                                return;
                             }
 
-                            if (pawn.Position.DistanceToSquared(target.Position) < 32f)
+                            target.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                            var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
                             {
-                                var waitjob = new Job(JobDefOf.Wait, 200);
-                                target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null, JobTag.MiscWork, false);
-                                ReadyForNextToil();
-                            }
-                            else
-                            {
-                                target.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
-                                var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
-                                {
-                                    locomotionUrgency = LocomotionUrgency.Sprint
-                                };
-                                target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null, JobTag.MiscWork, false);
-                            }
+                                locomotionUrgency = LocomotionUrgency.Sprint
+                            };
+                            target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                                JobTag.MiscWork);
                         }
                     }
                 };
                 WaitVictim.AddFinishAction(() =>
                 {
                     var target = TargetA.Thing as Pawn;
-                    target.jobs.EndCurrentJob(JobCondition.InterruptForced, true);
+                    target?.jobs.EndCurrentJob(JobCondition.InterruptForced);
                 });
                 WaitVictim.FailOnDespawnedOrNull(TargetIndex.A);
                 yield return WaitVictim;
 
-                var ReleaseVictim = new Toil()
+                var ReleaseVictim = new Toil
                 {
-                    defaultCompleteMode = ToilCompleteMode.Instant,
+                    defaultCompleteMode = ToilCompleteMode.Instant
                 };
                 ReleaseVictim.AddFinishAction(() =>
                 {
@@ -93,20 +102,21 @@ namespace AnimalHarvestingSpot
                 });
                 yield return ReleaseVictim;
             }
-            foreach (Toil toil in base.MakeNewToils())
+
+            foreach (var toil in base.MakeNewToils())
             {
                 yield return toil;
             }
         }
 
-        protected virtual bool CanTarget(Pawn trg)
+        protected bool CanTarget(Pawn trg)
         {
-            if (trg.GetStatValue(StatDefOf.MoveSpeed, true) <= pawn.GetStatValue(StatDefOf.MoveSpeed, true) / 2f)
+            if (trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f)
             {
                 return false;
             }
+
             return true;
         }
     }
 }
-
