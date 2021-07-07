@@ -1,6 +1,6 @@
 ﻿namespace AnimalHarvestingSpot
 {
-    class ModSettings
+    internal class ModSettings
     {
     }
 }

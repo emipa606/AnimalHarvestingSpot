@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/JobDef[defName="Slaughter"]/driverClass</xpath>
+    <value>
+      <driverClass>AnimalHarvestingSpot.JobDriver_Slaughter_OnSpot</driverClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/JobDef[defName="Milk"]/driverClass</xpath>
+    <value>
+      <driverClass>AnimalHarvestingSpot.JobDriver_Milk_OnSpot</driverClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/JobDef[defName="Shear"]/driverClass</xpath>
+    <value>
+      <driverClass>AnimalHarvestingSpot.JobDriver_Shear_OnSpot</driverClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/JobDef[defName="Train"]/driverClass</xpath>
+    <value>
+      <driverClass>AnimalHarvestingSpot.JobDriver_Train_OnSpot</driverClass>
+    </value>
+  </Operation>
+</Patch>
