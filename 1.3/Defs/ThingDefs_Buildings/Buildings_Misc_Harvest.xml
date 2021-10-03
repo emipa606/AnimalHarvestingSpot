@@ -5,14 +5,16 @@
     <statBases>
       <WorkToBuild>0</WorkToBuild>
     </statBases>
+    <thingClass>Building</thingClass>
     <scatterableOnMapGen>false</scatterableOnMapGen>
     <useHitPoints>False</useHitPoints>
     <designationCategory>Misc</designationCategory>
     <passability>Standable</passability>
+    <canOverlapZones>true</canOverlapZones>
     <building>
-      <sowTag>SupportPlantsOnly</sowTag>
-      <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+      <isInert>true</isInert>
       <ai_chillDestination>false</ai_chillDestination>
+      <ai_neverTrashThis>true</ai_neverTrashThis>
     </building>
   </ThingDef>
   <ThingDef ParentName="AnimalSpots">

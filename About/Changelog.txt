@@ -1,5 +1,8 @@
 # Changelog for AnimalHarvestingSpot
 
+1.0.15.0 - Spots should now be placeable in zones
+
+
 1.0.14.0 - Mod updated for 1.3 and passed autotests
 
 

@@ -1,8 +1,8 @@
 # AnimalHarvestingSpot
 
-![Image](https://i.imgur.com/WAEzk68.png)
+![Image](https://i.imgur.com/buuPQel.png)
 
-This is an update of -210&apos;s mod with their approval.
+This is an update of -210's mod with their approval.
 https://steamcommunity.com/sharedfiles/filedetails/?id=1409440925
 
 Added four new spots:
@@ -20,19 +20,10 @@ The old animal harvesting spot can be used for all but training.
 There is also an alternate texture-mod made by Si-Cafe:
 https://steamcommunity.com/sharedfiles/filedetails/?id=2437966351
 
-![Image](https://i.imgur.com/7Gzt3Rg.png)
+![Image](https://i.imgur.com/pufA0kM.png)
 
-
-[table]
-	[tr]
-		[td]https://invite.gg/Mlie]![Image](https://i.imgur.com/zdzzBrc.png)
-[/td]
-		[td]https://github.com/emipa606/AnimalHarvestingSpot]![Image](https://i.imgur.com/kTkpTOE.png)
-[/td]
-	[/tr]
-[/table]
 	
-![Image](https://i.imgur.com/NOW7jU1.png)
+![Image](https://i.imgur.com/Z4GOv8H.png)
 
 
 No more wool leave behind!
@@ -44,7 +35,7 @@ No more wool leave behind!
   shearing , milking , slaughtering.
 
 
-![Image](https://i.imgur.com/Rs6T6cr.png)
+![Image](https://i.imgur.com/PwoNOj4.png)
 
 
 
@@ -54,7 +45,6 @@ No more wool leave behind!
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
-
 
 
 
