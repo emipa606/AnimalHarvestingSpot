@@ -1,5 +1,8 @@
 # Changelog for AnimalHarvestingSpot
 
+1.0.16.0 - Fixed some issues with multiple pawns trying to do animal-tasks at the same time on the same animal.
+
+
 1.0.15.0 - Spots should now be placeable in zones
 
 

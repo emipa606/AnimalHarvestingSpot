@@ -20,6 +20,8 @@ The old animal harvesting spot can be used for all but training.
 There is also an alternate texture-mod made by Si-Cafe:
 https://steamcommunity.com/sharedfiles/filedetails/?id=2437966351
 
+- Spots should now be placeable in zones
+
 ![Image](https://i.imgur.com/pufA0kM.png)
 
 	

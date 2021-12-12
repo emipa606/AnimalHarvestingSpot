@@ -5,59 +5,14 @@ using Verse.AI;
 
 namespace AnimalHarvestingSpot;
 
-public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
+public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
 {
-    private Thing spot;
+    protected Thing spot;
 
     public override void ExposeData()
     {
         base.ExposeData();
         Scribe_References.Look(ref spot, "harvesting_spot");
-    }
-
-    public override bool TryMakePreToilReservations(bool errorOnFailed)
-    {
-        if (Prefs.DevMode)
-        {
-            //Log.Message("JobDriver_Slaughter_OnSpot: try to reserve!");
-        }
-
-        var list = new List<Thing>();
-        list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalHarvestingSpot")));
-        list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalSlaughteringSpot")));
-
-        if (!list.Any())
-        {
-            return base.TryMakePreToilReservations(errorOnFailed);
-        }
-
-        //if (Prefs.DevMode) Log.Message($"JobDriver_Slaughter_OnSpot: found following things: {string.Join(",", list)}");
-        if (TargetA.Thing is Pawn target)
-        {
-            spot = GenClosest.ClosestThing_Global_Reachable(
-                target.Position, target.Map, list,
-                PathEndMode.Touch, TraverseParms.For(target), 999f);
-
-            if (spot != null && CanTarget(target))
-            {
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: spot is " + spot);
-                }
-
-                return pawn.Reserve(job.GetTarget(TargetIndex.A), job);
-            }
-        }
-
-        if (Prefs.DevMode)
-        {
-            Log.Message("JobDriver_Slaughter_OnSpot: spot is not found or unreachable");
-        }
-
-        spot = null;
-        return base.TryMakePreToilReservations(errorOnFailed);
     }
 
     protected override IEnumerable<Toil> MakeNewToils()
@@ -79,7 +34,7 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
                 var target = TargetA.Thing as Pawn;
                 if (Prefs.DevMode)
                 {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: goto spot with" + target);
+                    //Log.Message("JobDriver_AnimalGatheringOnSpot: goto spot with " + target);
                 }
 
                 pawn.pather.StartPath(spot.Position, PathEndMode.Touch);
@@ -94,13 +49,12 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
         };
         CallVictim.FailOnDespawnedOrNull(TargetIndex.A);
         yield return CallVictim;
-
         var WaitVictim = new Toil
         {
             defaultCompleteMode = ToilCompleteMode.Never,
             tickAction = () =>
             {
-                if (Find.TickManager.TicksGame % 100 != 0)
+                if (Find.TickManager.TicksGame % 200 != 0)
                 {
                     return;
                 }
@@ -108,12 +62,12 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
                 var target = TargetA.Thing as Pawn;
                 if (Prefs.DevMode)
                 {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: waiting target" + target);
+                    //Log.Message("JobDriver_AnimalGatheringOnSpot: waiting target " + target);
                 }
 
                 if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
                 {
-                    var waitjob = new Job(JobDefOf.Wait, 100);
+                    var waitjob = new Job(JobDefOf.Wait, 200);
                     target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null,
                         JobTag.MiscWork);
                     ReadyForNextToil();
@@ -143,13 +97,26 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
         WaitVictim.FailOnDespawnedOrNull(TargetIndex.A);
         yield return WaitVictim;
 
+        var ReleaseVictim = new Toil
+        {
+            defaultCompleteMode = ToilCompleteMode.Instant
+        };
+        ReleaseVictim.AddFinishAction(() =>
+        {
+            if (TargetA.Thing is Pawn target)
+            {
+                target.ClearMind(true);
+            }
+        });
+        yield return ReleaseVictim;
+
         foreach (var toil in base.MakeNewToils())
         {
             yield return toil;
         }
     }
 
-    protected virtual bool CanTarget(Pawn trg)
+    protected bool CanTarget(Pawn trg)
     {
         if (trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f)
         {
