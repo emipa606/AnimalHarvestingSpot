@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AnimalHarvestingSpot.label>Tierernteplatz</AnimalHarvestingSpot.label>
+  <AnimalHarvestingSpot.description>Bezeichnet einen Ort, an dem Tiere gemolken, geschlachtet oder geschoren werden können.</AnimalHarvestingSpot.description>
+  <AnimalHarvestingSpot_Blueprint.label>Tierernteplatz (ritning)</AnimalHarvestingSpot_Blueprint.label>
+  <AnimalHarvestingSpot_Frame.label>Tierernteplatz (Gebäude)</AnimalHarvestingSpot_Frame.label>
+  <AnimalHarvestingSpot_Frame.description>Bezeichnet einen Ort, an dem Tiere gemolken, geschlachtet oder geschoren werden können.</AnimalHarvestingSpot_Frame.description>
+</LanguageData>
