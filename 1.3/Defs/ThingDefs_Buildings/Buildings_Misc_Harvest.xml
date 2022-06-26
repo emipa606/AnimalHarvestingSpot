@@ -13,6 +13,7 @@
     <canOverlapZones>true</canOverlapZones>
     <building>
       <isInert>true</isInert>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
       <ai_chillDestination>false</ai_chillDestination>
       <ai_neverTrashThis>true</ai_neverTrashThis>
     </building>

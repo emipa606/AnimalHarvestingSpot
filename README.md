@@ -21,6 +21,7 @@ There is also an alternate texture-mod made by Si-Cafe:
 https://steamcommunity.com/sharedfiles/filedetails/?id=2437966351
 
 - Spots should now be placeable in zones
+- German translation added, thanks Dimos!
 
 ![Image](https://i.imgur.com/pufA0kM.png)
 
@@ -47,6 +48,7 @@ No more wool leave behind!
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
+
 
 
 
