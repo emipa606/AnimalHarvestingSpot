@@ -149,11 +149,6 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
 
     protected virtual bool CanTarget(Pawn trg)
     {
-        if (trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f)
-        {
-            return false;
-        }
-
-        return true;
+        return !(trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f);
     }
 }

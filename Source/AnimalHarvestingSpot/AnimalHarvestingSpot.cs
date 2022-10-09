@@ -118,11 +118,6 @@ public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
 
     protected bool CanTarget(Pawn trg)
     {
-        if (trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f)
-        {
-            return false;
-        }
-
-        return true;
+        return !(trg.GetStatValue(StatDefOf.MoveSpeed) <= pawn.GetStatValue(StatDefOf.MoveSpeed) / 2f);
     }
 }
