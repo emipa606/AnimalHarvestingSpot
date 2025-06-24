@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: animal harvesting spot -->
+  <AnimalHarvestingSpot.label>animal harvesting spot</AnimalHarvestingSpot.label>
+  <!-- EN: Designates a spot where animals can be milked, sheared or slaughtered. -->
+  <AnimalHarvestingSpot.description>Designates a spot where animals can be milked, sheared or slaughtered.</AnimalHarvestingSpot.description>
+  <!-- EN: milking spot -->
+  <AnimalMilkingSpot.label>milking spot</AnimalMilkingSpot.label>
+  <!-- EN: Designates a spot where animals can be milked. -->
+  <AnimalMilkingSpot.description>Designates a spot where animals can be milked.</AnimalMilkingSpot.description>
+  <!-- EN: shearing spot -->
+  <AnimalShearingSpot.label>shearing spot</AnimalShearingSpot.label>
+  <!-- EN: Designates a spot where animals can be sheared. -->
+  <AnimalShearingSpot.description>Designates a spot where animals can be sheared.</AnimalShearingSpot.description>
+  <!-- EN: slaughtering spot -->
+  <AnimalSlaughteringSpot.label>slaughtering spot</AnimalSlaughteringSpot.label>
+  <!-- EN: Designates a spot where animals can be slaughtered. -->
+  <AnimalSlaughteringSpot.description>Designates a spot where animals can be slaughtered.</AnimalSlaughteringSpot.description>
+  <!-- EN: training spot -->
+  <AnimalTrainingSpot.label>training spot</AnimalTrainingSpot.label>
+  <!-- EN: Designates a spot where animals can start their training. -->
+  <AnimalTrainingSpot.description>Designates a spot where animals can start their training.</AnimalTrainingSpot.description>
+</LanguageData>

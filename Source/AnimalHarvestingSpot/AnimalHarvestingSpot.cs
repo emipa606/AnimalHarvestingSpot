@@ -7,17 +7,17 @@ namespace AnimalHarvestingSpot;
 
 public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
 {
-    protected Thing spot;
+    protected Thing Spot;
 
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_References.Look(ref spot, "harvesting_spot");
+        Scribe_References.Look(ref Spot, "harvesting_spot");
     }
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
-        if (spot == null || spot.Destroyed)
+        if (Spot == null || Spot.Destroyed)
         {
             foreach (var makeNewToil in base.MakeNewToils())
             {
@@ -27,18 +27,14 @@ public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
             yield break;
         }
 
-        var CallVictim = new Toil
+        var callVictim = new Toil
         {
             initAction = () =>
             {
                 var target = TargetA.Thing as Pawn;
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_AnimalGatheringOnSpot: goto spot with " + target);
-                }
 
-                pawn.pather.StartPath(spot.Position, PathEndMode.Touch);
-                var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
+                pawn.pather.StartPath(Spot.Position, PathEndMode.Touch);
+                var gotojob = new Job(JobDefOf.GotoWander, Spot.Position)
                 {
                     locomotionUrgency = LocomotionUrgency.Sprint
                 };
@@ -47,9 +43,9 @@ public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
             },
             defaultCompleteMode = ToilCompleteMode.PatherArrival
         };
-        CallVictim.FailOnDespawnedOrNull(TargetIndex.A);
-        yield return CallVictim;
-        var WaitVictim = new Toil
+        callVictim.FailOnDespawnedOrNull(TargetIndex.A);
+        yield return callVictim;
+        var waitVictim = new Toil
         {
             defaultCompleteMode = ToilCompleteMode.Never,
             tickAction = () =>
@@ -60,15 +56,11 @@ public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
                 }
 
                 var target = TargetA.Thing as Pawn;
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_AnimalGatheringOnSpot: waiting target " + target);
-                }
 
                 if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
                 {
-                    var waitjob = new Job(JobDefOf.Wait, 200);
-                    target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null,
+                    var waitJob = new Job(JobDefOf.Wait, 200);
+                    target.jobs.StartJob(waitJob, JobCondition.InterruptForced, null, false, true, null,
                         JobTag.MiscWork);
                     ReadyForNextToil();
                 }
@@ -80,35 +72,35 @@ public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
                     }
 
                     target.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
-                    var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
+                    var gotoJob = new Job(JobDefOf.GotoWander, Spot.Position)
                     {
                         locomotionUrgency = LocomotionUrgency.Sprint
                     };
-                    target.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                    target.jobs.StartJob(gotoJob, JobCondition.InterruptOptional, null, true, false, null,
                         JobTag.MiscWork);
                 }
             }
         };
-        WaitVictim.AddFinishAction(() =>
+        waitVictim.AddFinishAction(() =>
         {
             var target = TargetA.Thing as Pawn;
             target?.jobs.EndCurrentJob(JobCondition.InterruptForced);
         });
-        WaitVictim.FailOnDespawnedOrNull(TargetIndex.A);
-        yield return WaitVictim;
+        waitVictim.FailOnDespawnedOrNull(TargetIndex.A);
+        yield return waitVictim;
 
-        var ReleaseVictim = new Toil
+        var releaseVictim = new Toil
         {
             defaultCompleteMode = ToilCompleteMode.Instant
         };
-        ReleaseVictim.AddFinishAction(() =>
+        releaseVictim.AddFinishAction(() =>
         {
             if (TargetA.Thing is Pawn target)
             {
                 target.ClearMind(true);
             }
         });
-        yield return ReleaseVictim;
+        yield return releaseVictim;
 
         foreach (var toil in base.MakeNewToils())
         {

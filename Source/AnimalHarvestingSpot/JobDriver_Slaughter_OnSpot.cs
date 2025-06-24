@@ -17,11 +17,6 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
 
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
-        if (Prefs.DevMode)
-        {
-            //Log.Message("JobDriver_Slaughter_OnSpot: try to reserve!");
-        }
-
         var list = new List<Thing>();
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
             ThingDef.Named("AnimalHarvestingSpot")));
@@ -33,7 +28,6 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
             return base.TryMakePreToilReservations(errorOnFailed);
         }
 
-        //if (Prefs.DevMode) Log.Message($"JobDriver_Slaughter_OnSpot: found following things: {string.Join(",", list)}");
         if (TargetA.Thing is Pawn target)
         {
             spot = GenClosest.ClosestThing_Global_Reachable(
@@ -42,18 +36,8 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
 
             if (spot != null && CanTarget(target))
             {
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: spot is " + spot);
-                }
-
                 return pawn.Reserve(job.GetTarget(TargetIndex.A), job);
             }
-        }
-
-        if (Prefs.DevMode)
-        {
-            Log.Message("JobDriver_Slaughter_OnSpot: spot is not found or unreachable");
         }
 
         spot = null;
@@ -72,30 +56,25 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
             yield break;
         }
 
-        var CallVictim = new Toil
+        var callVictim = new Toil
         {
             initAction = () =>
             {
                 var target = TargetA.Thing as Pawn;
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: goto spot with" + target);
-                }
-
                 pawn.pather.StartPath(spot.Position, PathEndMode.Touch);
-                var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
+                var gotoJob = new Job(JobDefOf.GotoWander, spot.Position)
                 {
                     locomotionUrgency = LocomotionUrgency.Sprint
                 };
-                target?.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                target?.jobs.StartJob(gotoJob, JobCondition.InterruptOptional, null, true, false, null,
                     JobTag.MiscWork);
             },
             defaultCompleteMode = ToilCompleteMode.PatherArrival
         };
-        CallVictim.FailOnDespawnedOrNull(TargetIndex.A);
-        yield return CallVictim;
+        callVictim.FailOnDespawnedOrNull(TargetIndex.A);
+        yield return callVictim;
 
-        var WaitVictim = new Toil
+        var waitVictim = new Toil
         {
             defaultCompleteMode = ToilCompleteMode.Never,
             tickAction = () =>
@@ -106,15 +85,11 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
                 }
 
                 var target = TargetA.Thing as Pawn;
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_Slaughter_OnSpot: waiting target" + target);
-                }
 
                 if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
                 {
-                    var waitjob = new Job(JobDefOf.Wait, 100);
-                    target.jobs.StartJob(waitjob, JobCondition.InterruptForced, null, false, true, null,
+                    var waitJob = new Job(JobDefOf.Wait, 100);
+                    target.jobs.StartJob(waitJob, JobCondition.InterruptForced, null, false, true, null,
                         JobTag.MiscWork);
                     ReadyForNextToil();
                 }
@@ -135,13 +110,13 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
                 }
             }
         };
-        WaitVictim.AddFinishAction(() =>
+        waitVictim.AddFinishAction(() =>
         {
             var target = TargetA.Thing as Pawn;
             target?.jobs.EndCurrentJob(JobCondition.InterruptForced);
         });
-        WaitVictim.FailOnDespawnedOrNull(TargetIndex.A);
-        yield return WaitVictim;
+        waitVictim.FailOnDespawnedOrNull(TargetIndex.A);
+        yield return waitVictim;
 
         foreach (var toil in base.MakeNewToils())
         {

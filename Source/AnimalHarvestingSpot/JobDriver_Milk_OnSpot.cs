@@ -11,11 +11,6 @@ public class JobDriver_Milk_OnSpot : AnimalHarvestingSpot
 
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
-        if (Prefs.DevMode)
-        {
-            //Log.Message("JobDriver_AnimalGatheringOnSpot: try to reserve!");
-        }
-
         var list = new List<Thing>();
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
             ThingDef.Named("AnimalHarvestingSpot")));
@@ -29,27 +24,17 @@ public class JobDriver_Milk_OnSpot : AnimalHarvestingSpot
 
         if (TargetA.Thing is Pawn target)
         {
-            spot = GenClosest.ClosestThing_Global_Reachable(
+            Spot = GenClosest.ClosestThing_Global_Reachable(
                 target.Position, target.Map, list,
                 PathEndMode.Touch, TraverseParms.For(target), 999f);
 
-            if (spot != null && CanTarget(target))
+            if (Spot != null && CanTarget(target))
             {
-                if (Prefs.DevMode)
-                {
-                    //Log.Message("JobDriver_AnimalGatheringOnSpot: spot is " + spot);
-                }
-
                 return pawn.Reserve(job.GetTarget(TargetIndex.A), job);
             }
         }
 
-        if (Prefs.DevMode)
-        {
-            Log.Message("JobDriver_AnimalGatheringOnSpot: spot is null or cant be targeted");
-        }
-
-        spot = null;
+        Spot = null;
         return base.TryMakePreToilReservations(errorOnFailed);
     }
 
