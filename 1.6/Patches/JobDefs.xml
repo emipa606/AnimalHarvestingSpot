@@ -24,4 +24,29 @@
       <driverClass>AnimalHarvestingSpot.JobDriver_Train_OnSpot</driverClass>
     </value>
   </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/WorkGiverDef[defName="Slaughter"]/giverClass</xpath>
+    <value>
+      <giverClass>AnimalHarvestingSpot.WorkGiver_Slaughter_OnSpot</giverClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/WorkGiverDef[defName="Milk"]/giverClass</xpath>
+    <value>
+      <giverClass>AnimalHarvestingSpot.WorkGiver_Milk_OnSpot</giverClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/WorkGiverDef[defName="Shear"]/giverClass</xpath>
+    <value>
+      <giverClass>AnimalHarvestingSpot.WorkGiver_Shear_OnSpot</giverClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/WorkGiverDef[defName="Train"]/giverClass</xpath>
+    <value>
+      <giverClass>AnimalHarvestingSpot.WorkGiver_Train_OnSpot</giverClass>
+    </value>
+  </Operation>
 </Patch>

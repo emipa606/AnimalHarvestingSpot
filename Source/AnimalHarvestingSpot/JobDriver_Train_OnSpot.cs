@@ -7,42 +7,21 @@ namespace AnimalHarvestingSpot;
 
 public class JobDriver_Train_OnSpot : JobDriver_Train
 {
-    private Thing spot;
-
-    public override void ExposeData()
-    {
-        base.ExposeData();
-        Scribe_References.Look(ref spot, "harvesting_spot");
-    }
-
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
-        var list = pawn.Map.listerBuildings.AllBuildingsColonistOfDef(DefOfs.AnimalTrainingSpot);
-
-        if (!list.Any())
+        if (TargetB.Thing != null && TargetA.Thing is Pawn target && CanTarget(target))
         {
-            return base.TryMakePreToilReservations(errorOnFailed);
+            return pawn.Reserve(target, job);
         }
 
-        if (TargetA.Thing is Pawn target)
-        {
-            spot = GenClosest.ClosestThing_Global_Reachable(
-                target.Position, target.Map, list,
-                PathEndMode.Touch, TraverseParms.For(target), 999f);
-
-            if (spot != null && CanTarget(target))
-            {
-                return pawn.Reserve(job.GetTarget(TargetIndex.A), job);
-            }
-        }
-
-        spot = null;
         return base.TryMakePreToilReservations(errorOnFailed);
     }
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
-        if (spot == null || spot.Destroyed)
+        if (TargetB.Thing == null || TargetB.Thing.Destroyed || !TargetB.Thing.Spawned
+            || TargetB.Thing.Map != TargetA.Thing.Map
+            || !TargetB.Thing.Position.IsValid || !(TargetA.Thing is Pawn pawn) || TargetB.Thing.Position.IsForbidden(pawn))
         {
             foreach (var makeNewToil in base.MakeNewToils())
             {
@@ -52,23 +31,26 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
             yield break;
         }
 
+        this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+
         var callVictim = new Toil
         {
             initAction = () =>
             {
                 var target = TargetA.Thing as Pawn;
-                pawn.pather.StartPath(spot.Position, PathEndMode.Touch);
-                var gotojob = new Job(JobDefOf.GotoWander, spot.Position)
+                var gotojob = new Job(JobDefOf.GotoWander, TargetB.Thing.Position)
                 {
                     locomotionUrgency = LocomotionUrgency.Sprint
                 };
                 target?.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
                     JobTag.MiscWork);
             },
-            defaultCompleteMode = ToilCompleteMode.PatherArrival
+            defaultCompleteMode = ToilCompleteMode.Instant
         };
-        callVictim.FailOnDespawnedOrNull(TargetIndex.A);
+        callVictim.FailOnDespawnedNullOrForbidden(TargetIndex.B);
         yield return callVictim;
+
+        yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch).FailOnDestroyedNullOrForbidden(TargetIndex.B);
 
         var waitVictim = new Toil
         {
@@ -97,7 +79,7 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
                     }
 
                     target.jobs.EndCurrentJob(JobCondition.InterruptOptional, false);
-                    var gotoJob = new Job(JobDefOf.GotoWander, spot.Position)
+                    var gotoJob = new Job(JobDefOf.GotoWander, TargetB.Thing.Position)
                     {
                         locomotionUrgency = LocomotionUrgency.Sprint
                     };
@@ -113,7 +95,7 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
                 target.jobs.EndCurrentJob(JobCondition.InterruptForced);
             }
         });
-        waitVictim.FailOnDespawnedOrNull(TargetIndex.A);
+        waitVictim.FailOnDespawnedNullOrForbidden(TargetIndex.B);
         yield return waitVictim;
 
         foreach (var toil in base.MakeNewToils())
