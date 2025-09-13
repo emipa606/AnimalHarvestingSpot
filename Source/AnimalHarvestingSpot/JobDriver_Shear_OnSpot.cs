@@ -13,9 +13,9 @@ public class JobDriver_Shear_OnSpot : AnimalHarvestingSpot
     {
         var list = new List<Thing>();
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalHarvestingSpot")));
+            DefOfs.AnimalHarvestingSpot));
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalShearingSpot")));
+            DefOfs.AnimalShearingSpot));
 
         if (!list.Any())
         {

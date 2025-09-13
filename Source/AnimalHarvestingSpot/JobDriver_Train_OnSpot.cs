@@ -17,7 +17,7 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
 
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
-        var list = pawn.Map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("AnimalTrainingSpot"));
+        var list = pawn.Map.listerBuildings.AllBuildingsColonistOfDef(DefOfs.AnimalTrainingSpot);
 
         if (!list.Any())
         {

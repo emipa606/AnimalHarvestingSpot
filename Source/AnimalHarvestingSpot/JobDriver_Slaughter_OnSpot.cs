@@ -19,9 +19,9 @@ public class JobDriver_Slaughter_OnSpot : JobDriver_Slaughter
     {
         var list = new List<Thing>();
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalHarvestingSpot")));
+            DefOfs.AnimalHarvestingSpot));
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalSlaughteringSpot")));
+            DefOfs.AnimalSlaughteringSpot));
 
         if (!list.Any())
         {

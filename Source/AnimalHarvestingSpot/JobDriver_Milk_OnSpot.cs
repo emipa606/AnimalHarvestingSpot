@@ -13,9 +13,9 @@ public class JobDriver_Milk_OnSpot : AnimalHarvestingSpot
     {
         var list = new List<Thing>();
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalHarvestingSpot")));
+            DefOfs.AnimalHarvestingSpot));
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
-            ThingDef.Named("AnimalMilkingSpot")));
+            DefOfs.AnimalMilkingSpot));
 
         if (!list.Any())
         {
