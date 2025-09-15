@@ -24,7 +24,6 @@
       <driverClass>AnimalHarvestingSpot.JobDriver_Train_OnSpot</driverClass>
     </value>
   </Operation>
-
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/WorkGiverDef[defName="Slaughter"]/giverClass</xpath>
     <value>

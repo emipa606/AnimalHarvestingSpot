@@ -9,21 +9,29 @@ public class WorkGiver_Milk_OnSpot : WorkGiver_Milk
 {
     public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
     {
-        Job job = base.JobOnThing(pawn, t, forced);
-        if( job?.def == JobDefOf.Milk )
+        var job = base.JobOnThing(pawn, t, forced);
+        if (job?.def != JobDefOf.Milk)
         {
-            Thing spot = FindSpot(pawn);
-            if (spot != null
-                && pawn.CanReserveAndReach(spot, PathEndMode.InteractionCell, Danger.Some, 1, -1, null, forced)
-                && pawn.Map.designationManager.DesignationOn(spot, DesignationDefOf.Deconstruct) == null)
-            {
-                job.targetB = spot;
-            }
+            return job;
         }
+
+        var spot = findSpot(pawn);
+        if (spot == null
+            || !pawn.CanReserveAndReach(spot, PathEndMode.InteractionCell, Danger.Some, 1, -1, null, forced)
+            || pawn.Map.designationManager.DesignationOn(spot, DesignationDefOf.Deconstruct) != null)
+        {
+            return job;
+        }
+
+        if (job != null)
+        {
+            job.targetB = spot;
+        }
+
         return job;
     }
 
-    private static Thing FindSpot(Pawn pawn)
+    private static Thing findSpot(Pawn pawn)
     {
         var list = new List<Thing>();
         list.AddRange(pawn.Map.listerBuildings.AllBuildingsColonistOfDef(
@@ -32,7 +40,9 @@ public class WorkGiver_Milk_OnSpot : WorkGiver_Milk
             DefOfs.AnimalMilkingSpot));
 
         if (!list.Any())
+        {
             return null;
+        }
 
         return GenClosest.ClosestThing_Global_Reachable(
             pawn.Position, pawn.Map, list,

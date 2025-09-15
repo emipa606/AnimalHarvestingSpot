@@ -21,7 +21,8 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
     {
         if (TargetB.Thing == null || TargetB.Thing.Destroyed || !TargetB.Thing.Spawned
             || TargetB.Thing.Map != TargetA.Thing.Map
-            || !TargetB.Thing.Position.IsValid || !(TargetA.Thing is Pawn pawn) || TargetB.Thing.Position.IsForbidden(pawn))
+            || !TargetB.Thing.Position.IsValid || TargetA.Thing is not Pawn pawnThing ||
+            TargetB.Thing.Position.IsForbidden(pawnThing))
         {
             foreach (var makeNewToil in base.MakeNewToils())
             {
@@ -38,11 +39,11 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
             initAction = () =>
             {
                 var target = TargetA.Thing as Pawn;
-                var gotojob = new Job(JobDefOf.GotoWander, TargetB.Thing.Position)
+                var newJob = new Job(JobDefOf.GotoWander, TargetB.Thing.Position)
                 {
                     locomotionUrgency = LocomotionUrgency.Sprint
                 };
-                target?.jobs.StartJob(gotojob, JobCondition.InterruptOptional, null, true, false, null,
+                target?.jobs.StartJob(newJob, JobCondition.InterruptOptional, null, true, false, null,
                     JobTag.MiscWork);
             },
             defaultCompleteMode = ToilCompleteMode.Instant
@@ -50,7 +51,8 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
         callVictim.FailOnDespawnedNullOrForbidden(TargetIndex.B);
         yield return callVictim;
 
-        yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch).FailOnDestroyedNullOrForbidden(TargetIndex.B);
+        yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch)
+            .FailOnDestroyedNullOrForbidden(TargetIndex.B);
 
         var waitVictim = new Toil
         {
@@ -64,7 +66,7 @@ public class JobDriver_Train_OnSpot : JobDriver_Train
 
                 var target = TargetA.Thing as Pawn;
 
-                if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
+                if (target != null && pawnThing.Position.DistanceToSquared(target.Position) < 32f)
                 {
                     var waitJob = new Job(JobDefOf.Wait, 100);
                     target.jobs.StartJob(waitJob, JobCondition.InterruptForced, null, false, true, null,
