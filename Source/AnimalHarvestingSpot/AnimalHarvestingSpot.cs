@@ -56,7 +56,7 @@ public abstract class AnimalHarvestingSpot : JobDriver_GatherAnimalBodyResources
 
                 var target = TargetA.Thing as Pawn;
 
-                if (target != null && pawnThing.Position.DistanceToSquared(target.Position) < 32f)
+                if (target != null && pawn.Position.DistanceToSquared(target.Position) < 32f)
                 {
                     var waitJob = new Job(JobDefOf.Wait, 200);
                     target.jobs.StartJob(waitJob, JobCondition.InterruptForced, null, false, true, null,

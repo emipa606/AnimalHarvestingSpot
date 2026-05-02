@@ -6,4 +6,13 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="AnimalHarvestingSpot/AnimalHarvestingSpot.csproj" />
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/ThingDefs_Buildings/">
+    <File Path="../1.6/Defs/ThingDefs_Buildings/Buildings_Misc_Harvest.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Patches/">
+    <File Path="../1.6/Patches/JobDefs.xml" />
+  </Folder>
 </Solution>

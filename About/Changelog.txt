@@ -1,5 +1,8 @@
 # Changelog for AnimalHarvestingSpot
 
+1.6.2 - Animals and pawns should wait at their spot correctly
+
+
 1.6.1 - Obeys allowed zones, thanks Ilunak
 
 
