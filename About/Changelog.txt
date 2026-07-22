@@ -1,5 +1,8 @@
 # Changelog for AnimalHarvestingSpot
 
+1.6.3 - Fixed wrong author name
+
+
 1.6.2 - Animals and pawns should wait at their spot correctly
 
 
