@@ -22,10 +22,7 @@ public class WorkGiver_Train_OnSpot : WorkGiver_Train
             return job;
         }
 
-        if (job != null)
-        {
-            job.targetB = spot;
-        }
+        job.targetB = spot;
 
         return job;
     }

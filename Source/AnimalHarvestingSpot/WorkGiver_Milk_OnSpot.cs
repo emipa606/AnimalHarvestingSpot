@@ -23,10 +23,7 @@ public class WorkGiver_Milk_OnSpot : WorkGiver_Milk
             return job;
         }
 
-        if (job != null)
-        {
-            job.targetB = spot;
-        }
+        job.targetB = spot;
 
         return job;
     }

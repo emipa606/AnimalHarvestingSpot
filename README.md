@@ -50,4 +50,4 @@ No more wool leave behind!
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/AnimalHarvestingSpot?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/1542765654) | tags: animals
+[![Image](https://img.shields.io/github/v/release/emipa606/AnimalHarvestingSpot?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/1542765654) | animals

@@ -2,42 +2,83 @@
 
 ## Mod Overview and Purpose
 
-AnimalHarvestingSpot (Continued) is a mod for RimWorld that enhances animal management by providing specific spots designated for various animal-related tasks. Originally developed by -210, this version has been updated to improve functionality and user experience. The mod seamlessly integrates into the gameplay by allowing pawns to select the nearest appropriate spot for the desired animal-related action.
+AnimalHarvestingSpot (Continued) is a RimWorld mod that extends the functionality of animal harvesting by adding four new specialized spots: Milking, Shearing, Slaughtering, and Training. These spots allow pawns to perform specific actions on animals, making the process more organized and efficient. The mod also includes new icons, integrates with zones, and provides an alternate texture mod. Additionally, a German translation has been added, thanks to Dimos.
 
 ## Key Features and Systems
 
-- **New Spots:** Adds four new spots for specific tasks: Milking, Shearing, Slaughtering, and Training. Each spot is designated for a particular action, optimizing pawns' efficiency.
-- **Icon Integration:** Utilizes icons created by Those Icons and Freepik for visual clarity.
-- **Location Efficiency:** Pawns choose the closest valid spot for their intended action, enhancing gameplay flow.
-- **Zone Integration:** Spots are now placeable in zones, providing more flexibility in colony design.
-- **Localization Support:** Includes a German translation, thanks to contributor Dimos.
-- **All-in-One Spot:** The original harvesting spot can be used for all actions except training.
+1. **New Harvesting Spots**:
+   - **Milking**: Allows pawns to milk animals at designated spots.
+   - **Shearing**: Allows pawns to shear animals for wool at designated spots.
+   - **Slaughtering**: Allows pawns to slaughter animals at designated spots.
+   - **Training**: Allows pawns to train animals at designated spots.
+
+2. **Placement in Zones**: The new spots can be placed within zones, providing more control over where harvesting activities take place.
+
+3. **Alternate Textures**: An alternate texture mod by Si-Cafe is available, enhancing the visual appeal of the mod.
+
+4. **German Translation**: The mod now supports German, thanks to the contribution of Dimos.
 
 ## Coding Patterns and Conventions
 
-- **Inheritance Structure:** The mod's classes such as `JobDriver_Milk_OnSpot` and `JobDriver_Shear_OnSpot` inherit from base classes like `AnimalHarvestingSpot` to ensure shared functionality and reduce redundant code.
-- **Naming Conventions:** Follow C# naming conventions for classes (PascalCase) and methods (camelCase).
-- **Modular Design:** Separate classes and files for different functionalities to maintain clarity and ease of maintenance.
+### C# Files
+
+- **JobDriver_Shear_OnSpot.cs**:
+  - Handles the shearing job.
+  - Contains methods like `GetComp`, `TryMakePreToilReservations`, and `WorkTotal`.
+
+- **AnimalHarvestingSpot.cs**:
+  - Manages the harvesting spot.
+  - Contains methods like `CanTarget` and `MakeNewToils`.
+
+- **WorkGiver_Milk_OnSpot.cs**:
+  - Manages the milk job.
+  - Contains methods like `findSpot` and `JobOnThing`.
+
+- **JobDriver_Milk_OnSpot.cs**:
+  - Handles the milk job.
+  - Contains methods like `GetComp`, `TryMakePreToilReservations`, and `WorkTotal`.
+
+- **JobDriver_Slaughter_OnSpot.cs**:
+  - Handles the slaughter job.
+  - Contains methods like `CanTarget`, `MakeNewToils`, and `TryMakePreToilReservations`.
+
+### XML Files
+
+- **Buildings_Misc_Harvest.xml**:
+  - Defines the new harvesting spots.
+  - Contains `ThingDef` definitions for the Milking, Shearing, Slaughtering, and Training spots.
+
+- **JobDefs.xml**:
+  - Defines the job definitions for the new spots.
+  - Contains `JobDef` definitions for the Milking, Shearing, Slaughtering, and Training jobs.
+
+- **Jobs_Work_Override.xml**:
+  - Overrides existing job definitions to include the new spots.
+
+- **TranslationTemplate.xml**:
+  - Contains translation templates for the new spots.
 
 ## XML Integration
 
-- Define animal harvesting spot configurations through XML to allow for easy adjustments and additions without recompiling code.
-- Use XML for localizing strings, enabling straightforward translation processes and multi-language support.
+To integrate the new harvesting spots into the game, the mod modifies and adds XML definitions. These files are located in the `Defs` and `Overwrite-Defs` directories. The `ThingDefs_Buildings` and `JobDefs` files are specifically modified to include the new spot definitions.
 
 ## Harmony Patching
 
-- Utilize Harmony to safely apply patches ensuring compatibility with other mods and the base game.
-- Apply patches to modify existing game mechanics non-intrusively, allowing for extension or replacement of behaviors without conflicts.
+The mod uses Harmony to patch existing RimWorld code to integrate the new spots seamlessly. Harmony patches are located in the `Patches` directory. These patches modify methods in the RimWorld codebase to include the new spots in the game logic.
 
 ## Suggestions for Copilot
 
-- **Pattern Recognition:** Use Copilot to detect and suggest consistent patterns in similar methods and classes, such as gathering resources or assigning jobs.
-- **Code Completion:** Leverage Copilot to autofill code based on detected patterns in method structures and repeated logic.
-- **Error Prediction:** Implement AI suggestions to predict and address potential errors in integration, such as XML tag mismatches or unpatched methods.
-- **Localization Automation:** Assisting in identifying all strings requiring translation for seamless addition to the localization XML files.
-- **Harmony Usage:** Offer suggestions for commonly used Harmony patching patterns such as prefix, postfix, and transpiler methods.
+1. **C# Code Completion**: Use Copilot to generate methods and classes for new job drivers and work givers, ensuring that they follow the coding patterns and conventions established in the existing codebase.
 
-Ensure that you continue to adapt and leverage Copilot’s capabilities to maintain a high-efficiency workflow, while also contributing back improvements and fixes to this repository. For any issues or contributions, use the available channels, such as GitHub issues or Discord, to ensure swift and coordinated development efforts.
+2. **XML Definitions**: Use Copilot to generate new XML definitions for additional harvesting spots or job overrides. Ensure that the generated XML follows the structure and naming conventions used in the existing files.
+
+3. **Harmony Patches**: Use Copilot to generate Harmony patches for modifying existing RimWorld code. Ensure that the generated patches are correctly integrated into the mod's patching system.
+
+4. **Documentation**: Use Copilot to generate documentation for new classes and methods, providing a clear description of their purpose and usage.
+
+5. **Localization**: Use Copilot to generate translation templates for new strings and phrases, ensuring that the mod supports multiple languages.
+
+By following these guidelines, you can effectively use GitHub Copilot to enhance and maintain the AnimalHarvestingSpot (Continued) mod.
 
 ## Project Solution Guidelines
 - Relevant mod XML files are included as Solution Items under the solution folder named XML, these can be read and modified from within the solution.
@@ -46,3 +87,11 @@ Ensure that you continue to adapt and leverage Copilot’s capabilities to maint
 - When making functional changes in this mod, ensure the documented features stay in sync with implementation; use the in-solution `.github` copy as the primary file.
 - In the solution is also a project called Assembly-CSharp, containing a read-only version of the decompiled game source, for reference and debugging purposes.
 - For any new documentation, update this copilot-instructions.md file rather than creating separate documentation files.
+
+
+## Hard rules (must follow)
+- Do NOT run commands that modify the repo (no git commit, git apply, dotnet format) unless explicitly asked.
+- Prefer minimal reads: read only the smallest code region needed (around the suspicious lines).
+- When mentioning SonarQube issues, automatically use the SonarQube MCP service to fetch and address issues instead of making inferred fixes without querying SonarQube first.
+- When mentioning the rimworld log, automatically use the Rimworld MCP service to fetch the log.
+

@@ -23,10 +23,7 @@ public class WorkGiver_Shear_OnSpot : WorkGiver_Shear
             return job;
         }
 
-        if (job != null)
-        {
-            job.targetB = spot;
-        }
+        job.targetB = spot;
 
         return job;
     }

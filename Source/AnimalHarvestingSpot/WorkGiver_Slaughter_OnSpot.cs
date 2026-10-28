@@ -23,10 +23,7 @@ public class WorkGiver_Slaughter_OnSpot : WorkGiver_Slaughter
             return job;
         }
 
-        if (job != null)
-        {
-            job.targetB = spot;
-        }
+        job.targetB = spot;
 
         return job;
     }
